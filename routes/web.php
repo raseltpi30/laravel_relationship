@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/wlc', function () {
-    return "greetingbbbbbbbbbbb";
+    return "greetingbbbbbbbbbbb welcome 2";
 });
 Route::get('/test', 'App\Http\Controllers\Test@test');
 Route::get('/user_create','App\Http\Controllers\UserController@create');
