@@ -22,9 +22,11 @@ Route::get('/wlc', function () {
     return "greetingbbbbbbbbbbb";
 });
 Route::get('/test', 'App\Http\Controllers\Test@test');
-Route::get('/user_create', 'App\Http\Controllers\UserController@create');
+Route::get('/user_create','App\Http\Controllers\UserController@create');
 Route::get('/users', 'App\Http\Controllers\UserController@index');
 Route::get('/users/{id}', 'App\Http\Controllers\UserController@show');
-Route::get('/users/{id}/delete', 'App\Http\Controllers\UserController@delete');
+Route::get('/users/{id}/delete','App\Http\Controllers\UserController@delete');
+Route::get('/users/{id}/edit', 'App\Http\Controllers\UserController@edit');
+Route::get('/users/{id}/edit', 'App\Http\Controllers\UserController@edit');
 Route::get('/users/{id}/edit', 'App\Http\Controllers\UserController@edit');
 // Route::get('/wlc','Test@test');
