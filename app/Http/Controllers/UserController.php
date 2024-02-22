@@ -9,9 +9,8 @@ use function PHPUnit\Framework\returnSelf;
 
 class UserController extends Controller
 {
-    public function index(){
-        $users = User::all();
-        return $users;
+    public function creat_user(){
+        return view('create_user');
     }
     public function create(){
         // return "This is create page!";       
@@ -24,21 +23,22 @@ class UserController extends Controller
 
         return "Create Data successfully!";
     }
-    public function show($id){
-        $users = User::findOrFail($id);
-        return $users;
+    public function store(){
+        return "Add a user";
     }
-    public function delete($id){
-        $users = User::findOrFail($id);
-        $users->delete();
+    public function update(){
+        return "Updated";
+    }
+    public function updateName(){
+        return "User name has been Updated Successfully";
+    }
+    public function delete(){
         return "Deleted";
     }
-    public function edit($id){
-        $users = User::findOrFail($id);
-        $users->name = "New Name";
-        $users->email = "new@gmail.com";
-        $users->save();
-
-        return "User name changed Successfully";
+    public function show($id ,$name = "Raj"){
+        return $id ." ".$name;
+    }
+    public function display($id){
+        return "Display"." ".$id;
     }
 }
