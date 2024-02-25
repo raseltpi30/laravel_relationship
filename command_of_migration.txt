@@ -1,0 +1,5 @@
+php artisan make:migration create_customers_table --create_customers_info
+php artisan migrate
+php artisan migrate:rollback
+php artisan migrate:refresh
+php artisan make:migration add_designation_to_customers_table --table=sales

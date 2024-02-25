@@ -2,8 +2,12 @@
 
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Routing\RouteAction;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Address;
+use App\Models\Tag;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,26 +23,67 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', 'App\Http\Controllers\Test@test');
-// Route::get('/user_create','App\Http\Controllers\UserController@create');
-// Route::get('/create_user','App\Http\Controllers\UserController@creat_user');
-Route::post('/users','App\Http\Controllers\UserController@store');
-Route::put('/users','App\Http\Controllers\UserController@update');
-Route::patch('/users','App\Http\Controllers\UserController@updateName');
-Route::delete('/users','App\Http\Controllers\UserController@delete');
-Route::any('/test-any',function(){
-    return "I am from any!";
+Route::get('one-to-one',function(){
+    $user = User::find(1);
+    $address = $user->address->first();
+    // return $address;
+    // print_r($address);
+    echo $user->name."<br>";
+    echo $user->email."<br>";
+    echo $address->state."<br>";
+    echo $address->city."<br>";
+    echo $address->country."<br>";
+    // return $user->;
 });
-Route::get('/store/profile/{id}/{name?}','App\Http\Controllers\UserController@show');
-Route::get('/users/{id}','App\Http\Controllers\UserController@display')->where('id','[0-9]+');
-Route::get('/users/create','App\Http\Controllers\UserController@creat_user');
+Route::get('one-to-one-inverse',function(){
+    $address = Address::find(2);
+    return $address->user->name;
+});
+Route::get('one-to-many',function(){
+    $user = User::find(1);
 
+    // return $user;
+    foreach($user->posts as $re){
+        echo $re->title."<br>";
+        echo $re->description."<br>";
+    }
+});
+Route::get('one-to-many-inverse',function(){
+    $post = Post::find(5);
+    echo $post->user->name;
 
-Route::prefix('admin')->group(function(){
-    Route::get('/hello',function(){
-        return "hello";
-    });
-    Route::get('/world',function(){
-        return "world";
-    });
+    $post->user->name = "New Name";
+    $post->user->save();
+});
+Route::get('many-to-many',function(){
+    $post = Post::find(2);
+    // return $post->title;
+
+    $post->tags;
+
+    foreach($post->tags as $result){
+        echo $result->title."<br>";
+    }
+});
+Route::get('many-to-many-inverse',function(){
+    $tag = Tag::find(2);
+    return $tag->posts;
+    foreach($tag->posts as $result){
+        echo $result->title."<br>";
+    }
+});
+Route::get('attach',function(){
+    $post = Post::find(1);
+    $post->tags()->attach([1, 2]);
+    // return $post->tags;
+});
+Route::get('detach',function(){
+    $post = Post::find(1);
+    $post->tags()->detach();
+    // return $post->tags;
+});
+Route::get('sync',function(){
+    $post = Post::find(2);
+    $post->tags()->sync([1,2,3,4]);
+    // return $post->tags;
 });
